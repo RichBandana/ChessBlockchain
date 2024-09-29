@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play-to-Earn Chess Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h2>Player Wallet</h2>
+            <p id="wallet-display">Wallet: 0x5861Ca2BE5D0ea532e0300FA1447Ce89A401F8c4</p>
+            
+            <h2>Total Rewards</h2>
+            <p id="total-rewards">0 tokens</p>
+            <h2>Transaction History</h2>
+            <ul id="transaction-history"></ul>
+            
+            <button class="make_move" onclick="playerMove()">Make Move</button>
+            <p id="reward-display"></p>
+            
+            <button class="claim_rewards" onclick="mockContractCall()">Claim Rewards</button>
+            <button class="WithdrawEarnings" onclick="withdrawEarnings()">Withdraw Earnings</button>
+
+            <p id="reward-display"></p>
+        </div>
+        <div id="proposals">
+            <h2>DAO Proposals</h2>
+            <button onclick="createProposal('Increase rewards for great moves')">Create Proposal</button>
+        </div>
+
+        <div id="leaderboard"></div>
+
+        <div id="contract-info">
+            <h2>Contract Information</h2>
+            <p id="current-network">Network: Development</p>
+            <p id="contract-address">Contract Address: YOUR_CONTRACT_ADDRESS</p>
+        </div>
+        <h2>Leaderboard</h2>
+        <div id="leaderboard">
+            <ul>
+                <li>Player 1: <span id="leaderboardPlayer1">0 tokens</span></li>
+                <li>Player 2: <span id="leaderboardPlayer2">0 tokens</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <button id="connectWallet" onclick="connectMetaMask()">Connect MetaMask</button>
+        <div id="walletAddress">Wallet Address: 0x5861Ca2BE5D0ea532e0300FA1447Ce89A401F8c4</div>
+        <h1>Online Chess Game</h1>
+        <div class="player-info">
+            <div id="player1" class="player">
+                <h2>Player 1</h2>
+                <input type="text" id="player1Name" placeholder="Enter Player 1 Name" />
+                <p>Bitcoin: <span id="wallet1">0</span></p>
+                <p>Score: <span id="score1">0</span></p>
+            </div>
+            <div id="player2" class="player">
+                <h2>Player 2</h2>
+                <input type="text" id="player2Name" placeholder="Enter Player 2 Name" />
+                <p>Bitcoin: <span id="wallet2">0</span></p>
+                <p>Score: <span id="score2">0</span></p>
+            </div>
+        </div>
+        <button id="reset">Reset Game</button>
+        <div id="turn">Your turn</div>
+        <div id="chessboard" class="chessboard"></div>
+        <div id="message"></div>
+    </div>
+
+    <!-- External libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<script src="script.js"></script>
+    <script src="instructions.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+
+    <!-- Internal JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Ensure JavaScript is working
+            console.log('JS Loaded');
+            alert('JavaScript is working!');
+
+            // Check if button click event works
+            document.querySelectorAll('button').forEach(button => {
+                button.addEventListener('click', function () {
+                    alert(`Button '${this.innerText}' clicked!`);
+                });
+            });
+
+            // Mock contract call function
+            function mockContractCall() {
+                const gasFee = 0.01; // Mock gas fee for transactions
+                const totalTokens = 10; // Mock token count for testing
+
+                if (totalTokens > 0) {
+                    const transactionMessage = `Claimed ${totalTokens} tokens with gas fee of ${gasFee} ETH.`;
+                    document.getElementById('total-rewards').innerText = "0 tokens";
+
+                    // Add transaction to history
+                    const transactionHistory = document.getElementById('transaction-history');
+                    const listItem = document.createElement('li');
+                    listItem.innerText = transactionMessage;
+                    transactionHistory.appendChild(listItem);
+
+                    alert(transactionMessage);
+                } else {
+                    alert('No tokens to claim.');
+                }
+            }
+
+            function calculateReward(moveQuality) {
+                let baseReward = 1; // Base reward in tokens
+                if (moveQuality === "good") {
+                    return baseReward * 2; // Double rewards for good moves
+                } else if (moveQuality === "great") {
+                    return baseReward * 3; // Triple rewards for great moves
+                }
+                return baseReward; // Default reward for standard moves
+            }
+
+            // Mock function calls for demo purposes
+            window.mockContractCall = mockContractCall;
+        });
+    </script>
+</body>
+</html>
